@@ -1,6 +1,6 @@
-/* Cyberpunk Dark Mode Theme */
+/* WhatsApp-like Cyberpunk Chat UI */
 body {
-  font-family: 'Orbitron', 'Arial', sans-serif;
+  font-family: 'Segoe UI', 'Orbitron', Arial, sans-serif;
   background: linear-gradient(135deg, #181824 0%, #2b0036 100%);
   margin: 0;
   padding: 0;
@@ -9,35 +9,40 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  max-width: 480px;
   margin: 40px auto;
-  background: rgba(30, 30, 40, 0.95);
-  padding: 24px 24px 16px 24px;
-  border-radius: 16px;
+  background: rgba(30, 30, 40, 0.97);
+  padding: 0;
+  border-radius: 24px;
   box-shadow: 0 0 32px #00fff7, 0 0 8px #ff00ea;
   border: 2px solid #ff00ea;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  overflow: hidden;
 }
 
 h1 {
   text-align: center;
-  margin-bottom: 20px;
+  margin: 0;
+  padding: 18px 0 12px 0;
   color: #00fff7;
   text-shadow: 0 0 8px #ff00ea, 0 0 2px #00fff7;
   letter-spacing: 2px;
+  background: rgba(24, 24, 36, 0.95);
+  border-bottom: 1.5px solid #00fff7;
 }
 
 .chat-box {
-  height: 400px;
+  flex: 1;
   overflow-y: auto;
-  padding: 12px;
-  border: 2px solid #00fff7;
-  border-radius: 8px;
-  background: rgba(24, 24, 36, 0.95);
-  margin-bottom: 14px;
-  box-shadow: 0 0 8px #00fff7 inset;
+  padding: 24px 12px 12px 12px;
+  background: linear-gradient(135deg, #23243a 0%, #2b0036 100%);
   scrollbar-width: thin;
   scrollbar-color: #ff00ea #181824;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .chat-box::-webkit-scrollbar {
@@ -49,45 +54,63 @@ h1 {
 }
 
 .message {
-  margin: 10px 0;
-  padding: 10px 16px;
-  border-radius: 24px;
-  max-width: 80%;
-  display: inline-block;
-  font-size: 1.08em;
+  max-width: 75%;
+  padding: 12px 18px;
+  border-radius: 18px;
+  margin-bottom: 4px;
+  font-size: 1.05em;
   word-break: break-word;
-  box-shadow: 0 0 8px #00fff7, 0 0 2px #ff00ea;
+  box-shadow: 0 2px 8px #00fff733, 0 0 2px #ff00ea33;
   border: 1.5px solid transparent;
-  transition: background 0.2s;
+  position: relative;
+  clear: both;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px);}
+  to { opacity: 1; transform: translateY(0);}
 }
 
 .message.user {
-  background: linear-gradient(90deg, #ff00ea 0%, #00fff7 100%);
+  background: linear-gradient(90deg, #00fff7 0%, #ff00ea 100%);
   color: #181824;
-  float: right;
-  text-align: right;
+  align-self: flex-end;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 18px;
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
   border-color: #00fff7;
-  font-weight: bold;
+  font-weight: 500;
+  margin-left: 25%;
+  text-align: right;
 }
 
 .message.bot {
-  background: linear-gradient(90deg, #181824 0%, #2b0036 100%);
+  background: linear-gradient(90deg, #23243a 0%, #2b0036 100%);
   color: #00fff7;
-  float: left;
-  text-align: left;
+  align-self: flex-start;
+  border-bottom-left-radius: 6px;
+  border-top-right-radius: 18px;
+  border-top-left-radius: 18px;
+  border-bottom-right-radius: 18px;
   border-color: #ff00ea;
   font-style: italic;
+  margin-right: 25%;
+  text-align: left;
 }
 
 form {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  padding: 16px;
+  background: rgba(24, 24, 36, 0.98);
+  border-top: 1.5px solid #ff00ea;
 }
 
 input[type="text"] {
   flex: 1;
-  padding: 12px;
+  padding: 12px 16px;
   border-radius: 24px;
   border: 2px solid #ff00ea;
   background: #181824;
@@ -124,17 +147,8 @@ button:hover {
   box-shadow: 0 0 16px #ff00ea, 0 0 8px #00fff7;
 }
 
-/* Cyberpunk Glow for input and button */
 input[type="text"], button {
   text-shadow: 0 0 4px #00fff7, 0 0 2px #ff00ea;
 }
 
-/* Remove float after messages */
-.chat-box::after {
-  content: "";
-  display: block;
-  clear: both;
-}
-
-/* Optional: Import a cyberpunk font */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');

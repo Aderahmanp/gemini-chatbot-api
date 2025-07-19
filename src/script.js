@@ -10,8 +10,12 @@ form.addEventListener('submit', async function (e) {
 
   appendMessage('user', userMessage);
   input.value = '';
+  input.focus();
 
-  // connect to the server and send the message
+  // Show loading message
+  const loadingMsg = appendMessage('bot', '⏳ Gemini is typing...');
+  chatBox.scrollTop = chatBox.scrollHeight;
+
   try {
     const response = await fetch('/chat', {
       method: 'POST',
@@ -19,9 +23,18 @@ form.addEventListener('submit', async function (e) {
       body: JSON.stringify({ message: userMessage })
     });
     const data = await response.json();
+
+    // Remove loading message
+    if (loadingMsg && loadingMsg.parentNode) {
+      loadingMsg.parentNode.removeChild(loadingMsg);
+    }
     appendMessage('bot', data.output || data.error || 'No response from Gemini');
+    chatBox.scrollTop = chatBox.scrollHeight;
   } catch (err) {
-    appendMessage('bot', 'Error connecting to server');
+    if (loadingMsg && loadingMsg.parentNode) {
+      loadingMsg.parentNode.removeChild(loadingMsg);
+    }
+    appendMessage('bot', 'Please try again later.');
   }
 });
 
