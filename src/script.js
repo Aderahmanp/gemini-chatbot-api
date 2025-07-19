@@ -2,7 +2,7 @@ const form = document.getElementById('chat-form');
 const input = document.getElementById('user-input');
 const chatBox = document.getElementById('chat-box');
 
-form.addEventListener('submit', function (e) {
+form.addEventListener('submit', async function (e) {
   e.preventDefault();
 
   const userMessage = input.value.trim();
@@ -11,10 +11,18 @@ form.addEventListener('submit', function (e) {
   appendMessage('user', userMessage);
   input.value = '';
 
-  // Simulasi dummy balasan bot (placeholder)
-  setTimeout(() => {
-    appendMessage('bot', 'Gemini is thinking... (this is dummy response)');
-  }, 1000);
+  // connect to the server and send the message
+  try {
+    const response = await fetch('/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: userMessage })
+    });
+    const data = await response.json();
+    appendMessage('bot', data.output || data.error || 'No response from Gemini');
+  } catch (err) {
+    appendMessage('bot', 'Error connecting to server');
+  }
 });
 
 function appendMessage(sender, text) {

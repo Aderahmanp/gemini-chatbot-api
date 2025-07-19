@@ -7,6 +7,7 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(express.static('src'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
@@ -27,7 +28,7 @@ app.post('/chat', async (req, res) => {
 
     if (!message || typeof message !== 'string' || message.trim() === '') {
         return res.status(400).json({
-            error: 'Message is required and must be a non-empty string'
+            error: 'Please provide a message to continue the conversation.'
         });
     }
 
