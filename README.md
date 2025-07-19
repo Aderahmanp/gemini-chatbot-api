@@ -65,7 +65,7 @@ A modern travel assistant chatbot web app powered by Google Gemini AI. This proj
 ## 📁 Project Structure
 
 ```
-Submission/
+Folder/
 ├── src/
 │   ├── controller.js      # Chat logic and Gemini integration
 │   ├── routes.js          # Express routes
