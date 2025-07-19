@@ -1,7 +1,7 @@
-/* WhatsApp-like Cyberpunk Chat UI */
+/* Travel-Themed Cyberpunk Chat UI */
 body {
   font-family: 'Segoe UI', 'Orbitron', Arial, sans-serif;
-  background: linear-gradient(135deg, #181824 0%, #2b0036 100%);
+  background: linear-gradient(135deg, #0f2027 0%, #2b5876 50%, #4e4376 100%);
   margin: 0;
   padding: 0;
   color: #f8f8f2;
@@ -14,12 +14,13 @@ body {
   background: rgba(30, 30, 40, 0.97);
   padding: 0;
   border-radius: 24px;
-  box-shadow: 0 0 32px #00fff7, 0 0 8px #ff00ea;
-  border: 2px solid #ff00ea;
+  box-shadow: 0 0 32px #00fff7, 0 0 8px #ffb347;
+  border: 2px solid #ffb347;
   display: flex;
   flex-direction: column;
   height: 80vh;
   overflow: hidden;
+  position: relative;
 }
 
 h1 {
@@ -27,10 +28,31 @@ h1 {
   margin: 0;
   padding: 18px 0 12px 0;
   color: #00fff7;
-  text-shadow: 0 0 8px #ff00ea, 0 0 2px #00fff7;
+  text-shadow: 0 0 8px #ffb347, 0 0 2px #00fff7;
   letter-spacing: 2px;
   background: rgba(24, 24, 36, 0.95);
   border-bottom: 1.5px solid #00fff7;
+  font-family: 'Orbitron', 'Arial', sans-serif;
+  position: relative;
+}
+
+h1::after {
+  content: "✈️";
+  position: absolute;
+  right: 24px;
+  top: 18px;
+  font-size: 1.2em;
+  filter: drop-shadow(0 0 4px #ffb347);
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+  opacity: 0.08;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .chat-box {
@@ -39,17 +61,19 @@ h1 {
   padding: 24px 12px 12px 12px;
   background: linear-gradient(135deg, #23243a 0%, #2b0036 100%);
   scrollbar-width: thin;
-  scrollbar-color: #ff00ea #181824;
+  scrollbar-color: #ffb347 #181824;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
 .chat-box::-webkit-scrollbar {
   width: 8px;
 }
 .chat-box::-webkit-scrollbar-thumb {
-  background: #ff00ea;
+  background: #ffb347;
   border-radius: 8px;
 }
 
@@ -60,11 +84,14 @@ h1 {
   margin-bottom: 4px;
   font-size: 1.05em;
   word-break: break-word;
-  box-shadow: 0 2px 8px #00fff733, 0 0 2px #ff00ea33;
+  box-shadow: 0 2px 8px #00fff733, 0 0 2px #ffb34733;
   border: 1.5px solid transparent;
   position: relative;
   clear: both;
   animation: fadeIn 0.3s;
+  background-repeat: no-repeat;
+  background-size: 28px 28px;
+  background-position: 12px 12px;
 }
 
 @keyframes fadeIn {
@@ -73,7 +100,7 @@ h1 {
 }
 
 .message.user {
-  background: linear-gradient(90deg, #00fff7 0%, #ff00ea 100%);
+  background: linear-gradient(90deg, #00fff7 0%, #ffb347 100%);
   color: #181824;
   align-self: flex-end;
   border-bottom-right-radius: 6px;
@@ -84,6 +111,9 @@ h1 {
   font-weight: 500;
   margin-left: 25%;
   text-align: right;
+  background-image: url('https://img.icons8.com/ios-filled/50/airplane-take-off.png');
+  background-size: 22px 22px;
+  background-position: right 12px top 12px;
 }
 
 .message.bot {
@@ -94,10 +124,13 @@ h1 {
   border-top-right-radius: 18px;
   border-top-left-radius: 18px;
   border-bottom-right-radius: 18px;
-  border-color: #ff00ea;
+  border-color: #ffb347;
   font-style: italic;
   margin-right: 25%;
   text-align: left;
+  background-image: url('https://img.icons8.com/ios-filled/50/globe--v1.png');
+  background-size: 22px 22px;
+  background-position: left 12px top 12px;
 }
 
 form {
@@ -105,14 +138,16 @@ form {
   gap: 10px;
   padding: 16px;
   background: rgba(24, 24, 36, 0.98);
-  border-top: 1.5px solid #ff00ea;
+  border-top: 1.5px solid #ffb347;
+  position: relative;
+  z-index: 2;
 }
 
 input[type="text"] {
   flex: 1;
   padding: 12px 16px;
   border-radius: 24px;
-  border: 2px solid #ff00ea;
+  border: 2px solid #ffb347;
   background: #181824;
   color: #00fff7;
   font-size: 1.08em;
@@ -123,32 +158,32 @@ input[type="text"] {
 
 input[type="text"]:focus {
   border: 2px solid #00fff7;
-  box-shadow: 0 0 12px #ff00ea;
+  box-shadow: 0 0 12px #ffb347;
 }
 
 button {
   padding: 12px 28px;
   border: none;
-  background: linear-gradient(90deg, #ff00ea 0%, #00fff7 100%);
+  background: linear-gradient(90deg, #ffb347 0%, #00fff7 100%);
   color: #181824;
   border-radius: 24px;
   font-size: 1.08em;
   font-family: 'Orbitron', 'Arial', sans-serif;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 0 8px #00fff7, 0 0 2px #ff00ea;
+  box-shadow: 0 0 8px #00fff7, 0 0 2px #ffb347;
   letter-spacing: 1px;
   transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 
 button:hover {
-  background: linear-gradient(90deg, #00fff7 0%, #ff00ea 100%);
+  background: linear-gradient(90deg, #00fff7 0%, #ffb347 100%);
   color: #fff;
-  box-shadow: 0 0 16px #ff00ea, 0 0 8px #00fff7;
+  box-shadow: 0 0 16px #ffb347, 0 0 8px #00fff7;
 }
 
 input[type="text"], button {
-  text-shadow: 0 0 4px #00fff7, 0 0 2px #ff00ea;
+  text-shadow: 0 0 4px #00fff7, 0 0 2px #ffb347;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');

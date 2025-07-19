@@ -41,7 +41,31 @@ form.addEventListener('submit', async function (e) {
 function appendMessage(sender, text) {
   const msg = document.createElement('div');
   msg.classList.add('message', sender);
-  msg.textContent = text;
+
+  if (sender === 'bot') {
+    // Add Gemini label
+    const label = document.createElement('div');
+    label.textContent = '🤖 Gemini';
+    label.style.fontSize = '0.85em';
+    label.style.fontWeight = 'bold';
+    label.style.marginBottom = '4px';
+    label.style.color = '#00fff7';
+    msg.appendChild(label);
+
+    // Format markdown and line breaks
+    const formatted = text
+      .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') // bold
+      .replace(/\*(.*?)\*/g, '<i>$1</i>')     // italic
+      .replace(/\n/g, '<br>');                // line breaks
+
+    const content = document.createElement('div');
+    content.innerHTML = formatted;
+    msg.appendChild(content);
+  } else {
+    msg.textContent = text;
+  }
+
   chatBox.appendChild(msg);
   chatBox.scrollTop = chatBox.scrollHeight;
+  return msg;
 }
