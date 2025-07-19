@@ -14,18 +14,20 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
 const genAi = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const model = genAi.getGenerativeModel({
     model: 'gemini-1.5-flash'
 });
 
-
-
-
 // Store chat history per session (simple in-memory, keyed by session id or IP)
 const chatHistories = {};
+
+const SYSTEM_PROMPT = `
+You are a travel assistant chatbot. Your main focus is to answer any questions about tourist attractions, including recommendations, ticket prices, opening hours, facilities, directions, travel tips, and other important tourism info.
+Respond clearly, politely, and helpfully.
+If the question is unrelated to tourism, kindly guide the user back to the topic of tourist attractions.
+`;
 
 app.post('/chat', async (req, res) => {
     const message = req.body?.message;
@@ -47,12 +49,24 @@ app.post('/chat', async (req, res) => {
     chatHistories[sessionKey].push({ role: 'user', content: message });
 
     try {
-        // Prepare context: flatten previous messages
-        const context = chatHistories[sessionKey]
-            .map(msg => `${msg.role === 'user' ? 'User' : 'Bot'}: ${msg.content}`)
-            .join('\n') + '\nBot:';
+        // Prepare context: include system prompt and flatten previous messages
+        const context =
+            SYSTEM_PROMPT +
+            '\n' +
+            chatHistories[sessionKey]
+                .map(msg => `${msg.role === 'user' ? 'User' : 'Bot'}: ${msg.content}`)
+                .join('\n') +
+            '\nBot:';
 
-        const result = await model.generateContent(context);
+        const result = await model.generateContent({
+            contents: [{ role: 'user', parts: [{ text: context }] }],
+            generationConfig: {
+                temperature: 0.3,
+                topK: 15,
+                topP: 0.7,
+                maxOutputTokens: 250
+            }
+        });
 
         const botReply = result.response.text();
 
